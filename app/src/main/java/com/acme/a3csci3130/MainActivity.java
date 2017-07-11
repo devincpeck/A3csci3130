@@ -11,6 +11,11 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * main activity
+ * created by Juliano Franz, adapted by Devin Peck
+ */
+
 public class MainActivity extends Activity {
 
 
@@ -27,7 +32,7 @@ public class MainActivity extends Activity {
 
         //Set-up Firebase
         appData.firebaseDBInstance = FirebaseDatabase.getInstance();
-        appData.firebaseReference = appData.firebaseDBInstance.getReference("contacts");
+        appData.firebaseReference = appData.firebaseDBInstance.getReference("Businesses");
 
         //Get the reference to the UI contents
         contactListView = (ListView) findViewById(R.id.listView);
@@ -46,8 +51,8 @@ public class MainActivity extends Activity {
             // onItemClick method is called everytime a user clicks an item on the list
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Contact person = (Contact) firebaseAdapter.getItem(position);
-                showDetailView(person);
+                Contact business = (Contact) firebaseAdapter.getItem(position);
+                showDetailView(business);
             }
         });
     }
@@ -58,10 +63,10 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    private void showDetailView(Contact person)
+    private void showDetailView(Contact business)
     {
         Intent intent = new Intent(this, DetailViewActivity.class);
-        intent.putExtra("Contact", person);
+        intent.putExtra("Business", business);
         startActivity(intent);
     }
 

@@ -6,10 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * defines the flow for a new business creation by user
+ * created by Juliano Franz, adapted by Devin Peck
+ */
+
 public class CreateContactAcitivity extends Activity {
 
     private Button submitButton;
-    private EditText nameField, emailField;
+    private EditText businessNumberField, nameField, primaryBusinessField, addressField, provinceField;
     private MyApplicationData appState;
 
     @Override
@@ -20,18 +25,31 @@ public class CreateContactAcitivity extends Activity {
         appState = ((MyApplicationData) getApplicationContext());
 
         submitButton = (Button) findViewById(R.id.submitButton);
+        businessNumberField = (EditText) findViewById(R.id.businessNumber);
         nameField = (EditText) findViewById(R.id.name);
-        emailField = (EditText) findViewById(R.id.email);
+        primaryBusinessField = (EditText) findViewById(R.id.primaryBusiness);
+        addressField = (EditText) findViewById(R.id.address);
+        provinceField = (EditText) findViewById(R.id.provinceTerritory);
+
     }
+
+    /**
+     * creates a new entry in the database on create button click.
+     * @param v
+     */
 
     public void submitInfoButton(View v) {
         //each entry needs a unique ID
-        String personID = appState.firebaseReference.push().getKey();
+        String businessID = appState.firebaseReference.push().getKey();
+        String businessNumber = businessNumberField.getText().toString();
         String name = nameField.getText().toString();
-        String email = emailField.getText().toString();
-        Contact person = new Contact(personID, name, email);
+        String primaryBusiness = primaryBusinessField.getText().toString();
+        String address = addressField.getText().toString();
+        String province = provinceField.getText().toString();
 
-        appState.firebaseReference.child(personID).setValue(person);
+        Contact business = new Contact(businessID, businessNumber, name, primaryBusiness, address, province);
+
+        appState.firebaseReference.child(businessID).setValue(business);
 
         finish();
 
